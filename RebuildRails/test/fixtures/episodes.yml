@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  link: MyString
+  pubDate: 2015-08-11
+  agenda: MyText
+  description: MyText
+  duration: 2015-08-11 10:49:48
+  'no': MyString
+  mp3: MyString
+
+two:
+  title: MyText
+  link: MyString
+  pubDate: 2015-08-11
+  agenda: MyText
+  description: MyText
+  duration: 2015-08-11 10:49:48
+  'no': MyString
+  mp3: MyString
