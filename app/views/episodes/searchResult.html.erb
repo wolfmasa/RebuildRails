@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Serching by <%= @keyword %> </h2>
+
+<ul>
+    <% @resultList.each do |result| %>
+        <li>
+            <a href ="<%= result[:shownote].link %>">
+                <%= result[:shownote].title %>
+                (@ <%= result[:episode].title %>)
+            </a>
+        </li>
+    <% end %>
+</ul>
+

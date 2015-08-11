@@ -14,6 +14,7 @@ class EpisodesController < ApplicationController
   def updateFromRss
 
     Episode.delete_all
+    Shownote.delete_all
     SimpleRSS.item_tags << 'enclosure#url'
     SimpleRSS.item_tags << 'itunes:duration'
     rss = SimpleRSS.parse(open('http://feeds.rebuild.fm/rebuildfm'))
@@ -50,6 +51,9 @@ class EpisodesController < ApplicationController
       end
       params[:duration] = duration
 
+      m = params[:description].match(%r!&lt;p&gt;(.+)&lt;/p&gt;!)
+      params[:agenda] = m[1]
+
       @episode = Episode.new(params)
 
       @episode.shownotes = []
@@ -58,15 +62,31 @@ class EpisodesController < ApplicationController
       list.each do |note|
         url = note.match(/(http.+)&quot/)
         title = note.match(%r!&quot;&gt;(.+)&lt;/a&gt;!)
-        @episode.shownotes << Shownote.new(title: title[1], link: url[1])
+        t = title[1].gsub!('&amp;#39;', "\'")
+        t = title[1] if t.nil?
+        @episode.shownotes << Shownote.new(title: t, link: url[1])
       end
 
 
       @episode.save
     end
-    p Episode.all.count
     index
     render :action => 'index'
+  end
+
+  def searchShownote
+    @keyword = params[:word]
+    @resultList = []
+
+    @searchList = Shownote.all.select do |s|
+      s.title.include?(@keyword)
+    end
+
+    @searchList.each do |s|
+      @resultList << {shownote: s, episode: Episode.find(s.episode_id)}
+    end
+
+    render :action => 'searchResult'
   end
 
   # GET /episodes/1
