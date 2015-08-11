@@ -27,7 +27,7 @@
 
 <p>
   <strong>Duration:</strong>
-  <%= @episode.duration %>
+  <%= @episode.duration.strftime('%H:%M:%S') %>
 </p>
 
 <p>
@@ -38,6 +38,17 @@
 <p>
   <strong>Mp3:</strong>
   <%= @episode.mp3 %>
+</p>
+
+<p>
+<ul>
+    <% @episode.shownotes.each do |s| %>
+        <li> <a href="<%= s.link %>">
+                <%= s.title %>
+            </a>
+        </li>
+    <% end %>
+</ul>
 </p>
 
 <%= link_to 'Edit', edit_episode_path(@episode) %> |

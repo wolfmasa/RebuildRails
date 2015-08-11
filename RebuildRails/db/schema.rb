@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150811014948) do
+ActiveRecord::Schema.define(version: 20150811033353) do
 
   create_table "episodes", force: :cascade do |t|
     t.text     "title"
@@ -24,6 +24,14 @@ ActiveRecord::Schema.define(version: 20150811014948) do
     t.string   "mp3"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+  end
+
+  create_table "shownotes", force: :cascade do |t|
+    t.text     "title"
+    t.text     "link"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer  "episode_id"
   end
 
 end
