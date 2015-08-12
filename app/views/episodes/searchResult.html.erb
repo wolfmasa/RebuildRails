@@ -1,15 +1,12 @@
-<p id="notice"><%= notice %></p>
+<div class="episode-index-contents">
+  <h1 class="episode-index-title">Serching by <%= @keyword %> </h2>
 
-<h1>Serching by <%= @keyword %> </h2>
-
-<ul>
-    <% @resultList.each do |result| %>
-        <li>
-            <a href ="<%= result[:shownote].link %>">
-                <%= result[:shownote].title %>
-                (@ <%= result[:episode].title %>)
-            </a>
-        </li>
-    <% end %>
-</ul>
-
+    <ul class="episode-list container">
+      <% @resultList.each do |result| %>
+          <li class="episode-list-item-li">
+            <%= link_to(result[:shownote].title, result[:shownote].link, :class => 'episode-list-item') %>
+            <%= link_to("(@ #{result[:episode].no})", 'episodes/' + result[:episode].id.to_s, :class => 'episode-list-item') %>
+          </li>
+      <% end %>
+    </ul>
+</div>

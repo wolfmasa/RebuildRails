@@ -23,16 +23,6 @@ class EpisodesController < ApplicationController
 
     rss.items.each do |item|
       note = item[:description].force_encoding('utf-8')
-=begin
-      list = note.scan(noteURL)
-      list.each do |note|
-        url = note.match(/(http.+)&quot/)
-        #p url[1]
-        title = note.match(%r!&quot;&gt;(.+)&lt;/a&gt;!)
-        #p title[1]
-        puts "[#{title[1]}](#{url[1]})"
-      end
-=end
       params = {}
       title = item.title.force_encoding('utf-8')
       params[:title] = title
@@ -74,12 +64,16 @@ class EpisodesController < ApplicationController
     render :action => 'index'
   end
 
-  def searchShownote
-    @keyword = params[:word]
+  def search
+    searchCore params[:word]
+  end
+
+  def searchCore word
+    @keyword = word
     @resultList = []
 
     @searchList = Shownote.all.select do |s|
-      s.title.include?(@keyword)
+      s.title[/#{@keyword}/i]
     end
 
     @searchList.each do |s|

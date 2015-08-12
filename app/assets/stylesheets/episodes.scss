@@ -1,3 +1,28 @@
 // Place all the styles related to the Episodes controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+.episode-index-title{
+  font-size: 50px;
+  margin: 0px;
+  padding: 20px;
+}
+.episode-index-contents{
+  text-align: center;
+  background-color: rgb(0,0,0);
+  color: #FFF;
+}
+.episode-list-item-li{
+  margin: 10px;
+}
+
+.episode-list{
+  width: 80%;
+  list-style: none;
+}
+.episode-list-item:link{
+  color: #FFF;
+}
+.episode-list-item:visited{
+  color: #FFF;
+}

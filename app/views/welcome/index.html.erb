@@ -1,6 +1,23 @@
-<div class="context-body">
-<h1>Welcome#index</h1>
 
-<p>Find me in app/views/welcome/index.html.erb</p>
+<div class="top-contents">
+
+  <div class="top-body container">
+  <h1 class="RR-TopLogo">Rebuild Rails</h1>
+
+
+  <p>A database of <a href="http://rebuild.fm">Rebuild.fm</a>, one of the famous Japanese Podcast, hosted by Tatsuhiko Miyagawa.</p>
+
+  <p class="top-description">This site is un-offical.</p>
+
+    <p>
+      <%= link_to("Episodes", episodes_path, :class => "btn btn-default top-button") %>
+      <%= link_to("Casts", episodes_path, :class => "btn btn-default top-button") %>
+
+      <%= form_tag('/search', :method => 'get', :class => 'top-serach-area') do %>
+      <%= search_field_tag('word', "", :class => 'seatch-text-field') %>
+      <%= submit_tag 'Search', :class =>'btn btn-default top-button'%>
+      <% end %>
+    </p>
+  </div>
+
 </div>
-
