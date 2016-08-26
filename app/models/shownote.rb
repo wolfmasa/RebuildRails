@@ -1,3 +1,3 @@
-class Shownote < ActiveRecord::Base
+class Shownote < ApplicationRecord
   belongs_to :episode
 end

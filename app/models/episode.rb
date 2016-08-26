@@ -1,3 +1,3 @@
-class Episode < ActiveRecord::Base
+class Episode < ApplicationRecord
   has_many :shownotes
 end
