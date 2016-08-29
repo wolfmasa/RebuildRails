@@ -3,6 +3,7 @@ Rails.application.routes.draw do
   resources :episodes
   root 'welcome#index'
   get 'update' => 'episodes#updateFromRss'
+  get 'clear' => 'episodes#clear'
   get 'search/:word' => 'episodes#search'
   get 'search' => 'episodes#search'
 end

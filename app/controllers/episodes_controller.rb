@@ -11,10 +11,14 @@ class EpisodesController < ApplicationController
     @episodes = Episode.all
   end
 
+  def clear
+    Episode.delete_all
+    Shownote.delete_all
+    redirect_to root_url
+  end
+
   def updateFromRss
 
-    #Episode.delete_all
-    #Shownote.delete_all
     SimpleRSS.item_tags << 'enclosure#url'
     SimpleRSS.item_tags << 'itunes:duration'
     rss = SimpleRSS.parse(open('http://feeds.rebuild.fm/rebuildfm'))
@@ -54,8 +58,7 @@ class EpisodesController < ApplicationController
       list.each do |note|
         url = note.match(/(http.+)&quot/)
         title = note.match(%r!&quot;&gt;(.+)&lt;/a&gt;!)
-        t = title[1].gsub!('&amp;#39;', "\'")
-        t = title[1] if t.nil?
+        t = title[1].gsub!('&amp;#39;', "\'") || title[1]
         @episode.shownotes << Shownote.new(title: t, link: url[1])
       end
 
