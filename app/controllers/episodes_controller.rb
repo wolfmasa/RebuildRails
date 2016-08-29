@@ -13,8 +13,8 @@ class EpisodesController < ApplicationController
 
   def updateFromRss
 
-    Episode.delete_all
-    Shownote.delete_all
+    #Episode.delete_all
+    #Shownote.delete_all
     SimpleRSS.item_tags << 'enclosure#url'
     SimpleRSS.item_tags << 'itunes:duration'
     rss = SimpleRSS.parse(open('http://feeds.rebuild.fm/rebuildfm'))
@@ -22,10 +22,12 @@ class EpisodesController < ApplicationController
     noteURL = %r!&lt;li&gt;&lt;a href=&quot;.+!
 
     rss.items.each do |item|
-      note = item[:description].force_encoding('utf-8')
-      params = {}
       title = item.title.force_encoding('utf-8')
-      params[:title] = title
+
+      # skip if already exist
+      next if Episode.find_by( title: title)
+
+      params = {title: title}
 
       m = title.match(/(\d+):/)
       params[:no] = m[1]
@@ -45,9 +47,9 @@ class EpisodesController < ApplicationController
       params[:agenda] = m[1]
 
       @episode = Episode.new(params)
-
       @episode.shownotes = []
 
+      note = item[:description].force_encoding('utf-8')
       list = params[:description].scan(%r!&lt;li&gt;&lt;a href=&quot;.+!)
       list.each do |note|
         url = note.match(/(http.+)&quot/)
